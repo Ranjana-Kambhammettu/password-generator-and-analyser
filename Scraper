@@ -1,14 +1,24 @@
 import requests
 from bs4 import BeautifulSoup
+import csv
+
+req = requests.get("https://en.wikipedia.org/wiki/Wikipedia:10,000_most_common_passwords")
+scrappedpw =[]
+
+
+soup = BeautifulSoup(req.content , "html.parser")
+passwords = soup.find(id="import requests")
+from bs4 import BeautifulSoup
+import csv
 
 req = requests.get("https://nordpass.com/most-common-passwords-list/")
-#products =[]
+scrappedpw =[]
 
 
 soup = BeautifulSoup(req.content , "html.parser")
 passwords = soup.find(id="findings - top worst passwords")
 
 check = passwords.find("div", class_="Findings__table-inner Findings__table--overflow text-white")
+for a in check:
+   scrappedpw.append(a)
 
-
-print(check.prettify())
