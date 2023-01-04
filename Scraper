@@ -1,0 +1,14 @@
+import requests
+from bs4 import BeautifulSoup
+
+req = requests.get("https://nordpass.com/most-common-passwords-list/")
+#products =[]
+
+
+soup = BeautifulSoup(req.content , "html.parser")
+passwords = soup.find(id="findings - top worst passwords")
+
+check = passwords.find("div", class_="Findings__table-inner Findings__table--overflow text-white")
+
+
+print(check.prettify())
