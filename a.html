@@ -8,8 +8,10 @@
     <meta name="generator" content="Hugo 0.108.0">
     <title>Password Generator and Analyser</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/checkout/">
-<link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<script defer src="https://pyscript.net/latest/pyscript.js"></script> 
+    <link href="https://getbootstrap.com/docs/5.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
+<script defer src="https://pyscript.net/latest/pyscript.js"></script>
     <style>
         .container {
     max-width: 960px;
@@ -65,27 +67,23 @@
         -webkit-overflow-scrolling: touch;
       }
       
-body {
-  height: 1000px; 
-                
-  width: 1000px;      
-}
+
 
     </style>
 
 
   </head>
   <body class="bg-light">
-     <py-script>
-        print("hello, world!")
-    </py-script>
-<div class="container">
+     
+
+            
+    <div class="container">
   <main>
     
     <div class="py-5 text-center">
       <img class="d-block mx-auto mb-4" src="icon.png" alt="" width="100" height="100">
       <h2>Password Generator and Analyser</h2>
-      <p class="lead">Generate personilzed passwords and analyse password strength.</p>
+      <p class="lead">Generate personalized passwords and analyse password strength.</p>
     </div>
 
     <div class="row g-5">
@@ -97,15 +95,55 @@ body {
 
         <form class="card p-2">
           <div class="input-group">
-            <input type="text" class="pana form-control" placeholder="Enter Password">
-            <button id="analyse" type="submit" class="btn btn-secondary">Analyse</button>
-
+            <input id="def" type="text" class="pana form-control" placeholder="Enter Password">
+            <button id="analyse" type="submit" class="btn btn-secondary">Analyse</button>          
+<py-script>
+import re
+from pyodide import create_proxy
+#document.getElementById("p1").innerHTML = "New text!";
+runButton=js.document.getElementById('analyse')
+def pwd_analyse(event):
+  password=js.document.getElementById('def').value
+  patterns=['gan', 'ure', 'kata', 'rina', 'kat', 'rin', 'west', 'she', 'incognit', 'illie', 'bill', 'lineage', 'age123', 'ali', 'emon', 'crack', 'gen', 'ilove', 'ie1', 'times', 'mes', 'what', 'miss', 'wwwww', 'brandon', 'brave', 'med', 'mohamme', 'hamm', 'daniel', 'ley', 'y12', 'ard', 'dor', 'the', 'leedsu', 'iddqd8', 'wood', 'micr', 'bug', 'ladybug', 'buffy', 'uffy', 'sophie', 'laketaho', 'ket', 'pic', 'man', 'onal', 'rona', 'nald', 'way', 'ent', 'sarah', 'ton', 'jgj', 'gjhn', 'ste', 'ucks', 'let', 'key', 'fuck', 'one', 'ner', 'oner', 'loo', 'georg', 'erchief', 'master', 'ick', 'alex', 'ania', 'nia', 'ani', '123456789', '123456', 'ELE', '111111', 'erico', 'sych', 'psych', 'anthon', 'ant', 'ny1', 'ierr', 'red', 'fre', 'fred', 'heel', 'tar', 'tarheel', 'hee', 'fktrc', 'fkt', 'petite', 'etit', 'eti', 'bart', 'art', 'ette', 'laudi', 'claudiu', 'lau', 'mar', 'tor', 'victo', 'tori', 'mpton', 'hampton', 'pok', 'omas', 'toma', 'tone', 'get', 'geto', 'etone', 'dfcbk', 'dfcbkmtd', 'asdfgh12', 'asdfgh', 'asd', 'angel', 'golfer', 'golfer2', 'golf', 'fer', 'nny', 'simon', 'ock', 'aze', 'zer', 'oof', 'chris', 'ris', 'ewa', 'pro', 'ron', 'ipper', 'ets', 'hyper', 'ter123', 'azz', 'ster', 'big', 'lat', 'boob', 'ers', 'start', 'art1', 'sta', 'star', 'ippo', 'hippo', 'ipp', 'uke', 'jose', 'teddy', 'teddyb', 'ONNIE', 'lan', 'ANN', 'ANNON', 'dre', 'reyf', 'password', 'min', 'egirl', 'girl', 'ceg', 'surfin', 'lvbnhb', 'a20', '2002', 'newpass', 'new', 'gged', 'agge', 'ged', 'pets', 'trumpet', 'sco', 'nger', 'bur', 'blue', 'andy', 'run', 'illy', 'lly', 'kers', 'sun', 'ball', 'rri', 'mor', 'rocket', 'goc', 'edward', 'harlie', 'charlie', 'charl', 'iss', 'bastar', 'meri', 'omm', 'mmy', 'momm', '123', 'cab', 'ible', 'indi', 'head', 'edskins', '2010', 'erlin', 'erlin1', 'lin1', 'merlin', 'in1', 'lin', 'er1', 'good', 'asa', 'asan', 'mer', 'ephan', 'tephanie', 'cruise', 'xplo', 'explo', 'ally', 'apple', 'apples', 'appl', 'les', 'app', 'str', 'shan', 'shane1', 'shane', 'sha', 'ari', 'ustin', 'fish1', 'fish', 'ish1', 'char', 'cha', 'ain', 'bos', 'un1', 'mike', 'cobra', 'weapon', 'noo', 'snoo', 'aaaa', 'aaa', 'aaaaa', 'qwert', 'qwerty', 'qwer', 'dog', 'rea', 'kore', 'kor', '1234', 'music', 'katie', 'ati', 'layer', 'pla', '1qaz', 'qqqq', 'qqq', '5150', 'der', 'ander', 'ing', 'ora', 'prior', 'pri', 'SCO', 'sexy', 'atali', 'tali', 'sm4llvil', 'ena', 'foot', 'qwertyuiop12345', 'cele', 'lit', 'kis', 'rry', 'erry', '54321', 'aba', 'dad', 'cnbr', 'nbr', 'birthday', 'yjdf', 'jdf', 'roman', 'john', 'imm', 'can', 'anon1', 'non', 'ell', 'well', 'iddle', 'dles', 'hoo', 'ester', 'fytxrf', 'asdf', 'asdfg', 'cape', 'ole', 'pol', 'abell', 'hot', 'tre', 'hotr', 'hol', 'qazwsxedc1', 'qazwsxedc', 'bubb', 'ite', 'favorite', 'avo', 'fire', 'kman', 'uck', 'ckman', 'che', 'ar1', 'celtic', 'elt', 'black', 'ara', 'ova', 'camel', 'came', 'cam', 'ela', 'mnbvcxz', 'vert', 'pervert', 'joe', 'losangel', 'ero', 'cool', 'ool', 'boy', 'ERS', 'diamond', 'ORD', 'squi', 'olo', '12345', 'werty1234', 'werty12345', 'oron', 'ronto', 'toro', 'tto', 'james', 'er22', 'tiger', 'madelein', 'del', 'RIA', 'MARI', 'MAR', 'ugs', 'dragon', 'night', 'cali', 'kin', 'onnie', 'nnie', 'ord', 'eggie', 'gie', 'reg', 'ller', 'alle', '200', 'ter', 'oun', 'ever', 'jesus', 'sweet', 'krist', '777', 'corpio', 'orpio', 'ach', 'en1', 'even1', 'anderso', 'erso', 'ders', 'anders', 'blood', 'lood', 'banan', 'david', 'tha', 'abet', 'elizabe', 'bet', 'ford', 'inte', 'zxc', 'wil', 'uddy', 'son', 'mag', 'guy', 'pan', 'abela', 'bab', 'land', 'atch', 'long', 'zzzz1', 'zzzz', 'ill', 'maxim', 'maximil', 'imi', 'oulou', 'ulou', 'mou', 'oul', 'ran', 'soccer', 'ashley', 'bingo', 'ack', 'bon', 'fffff', 'peter', '1995', 'dima', 'dima19', '199', 'a19', 'a1995', 'alesh', 'ales', 'lesh', 'esha', 'ker', 'super', 'tro', 'oot', 'ootball', 'BIG', 'atl', 'andro', 'sand', 'sandr', 'san', 'bigd', 'bigdu', 'olphin1', 'phin', 'orno', 'fhtym', 'gfh', 'ling', 'ili', 'free', 'sus', 'sex', 'a198', 'anna19', '1986', 'minota', 'des', 'destro', 'ico', 'mustan', 'guita', 'ndrea', 'bitch', 'cent', 'clement', 'ment', 'lon', 'onl', 'con', 'abby', '234', '1q2', '2345', 'ore', 'horny', 'champ', 'gemini1', 'emin', 'ini11', 'emi', 'rill', 'dio', 'adi', 'adio', 'hole', 'pa123', 'a123', 'ann', 'nne', 'ean', 'ave', 'jxrf', 'har', 'pee', 'per', 'ance', '3qq', '123123q', 'linda', 'martin', 'shi', 'umpy', '6666', 'itty', 'custom', 'cus', 'ust', 'jack', 'ass', 'pass', 'green', 'call', 'lla', 'rami', 'ett', 'llllll', 'line', 'ome', 'hello', 'flb', 'byf', 'dar', 'rrrr', 'rrrrrr']
+  ret=''
+  v=str(password)
+  f=type(v)
+  #js.alert(v)
+  #js.alert(f)
+  if v == "\n" or v == " ":
+    res="Password cannot be a newline or space!" 
+  
+  elif 8 <= len(v) <= 20:
+    #checks for patterns in password
+    for pattern in patterns:
+      if pattern in v:
+        ret= "Weak Password: Weak patterns have been recognized in the password"
+    # checks for occurrence of a character 
+    # three or more times in a row
+    if re.search(r'(.)\1\1', v):
+      if len(ret)==0:
+        ret= "Weak Password: Same character repeats three or more times in a row"
+    # checks for occurrence of same string 
+    # pattern( minimum of two character length)
+    # repeating
+    elif re.search(r'(...)(.*?)\1', v) and len(ret)==0:
+      ret="Weak password: Same string pattern repetition"
+    else:
+      if len(ret)==0:
+        ret="Strong Password!"
+  else:
+    ret="Password length must be 8-20 characters!"
+  
+  js.alert(ret)
+cc=create_proxy(pwd_analyse)
+runButton.addEventListener("click",cc)
+</py-script>
           </div>
         </form>
       </div>
       <div class="col-md-7 col-lg-8">
         <h4 class="mb-3">Password Generator</h4>
-        <form class="needs-validation" novalidate action="/a.html" method="POST">
+        <form class="needs-validation" novalidate >
           <div class="row g-3">
             <div class="col-sm-6">
               <label for="firstName" class="form-label" >First name</label>
@@ -201,10 +239,81 @@ body {
 
           <hr class="my-4">
           <button id="generate" class="w-100 btn btn-primary btn-lg" type="submit" >Generate Passwords</button>
+<py-script>
+import random
+from pyodide import create_proxy
+run1Button=js.document.getElementById('generate')
+def pwd_generate(event):
+  words=js.document.getElementsByClassName("pgen");
+  words=list(words)
+  for i in range(len(words)):
+    words[i]=str(words[i].value)
+  numbers=[words[-2],words[-1]]
+  words.pop()
+  words.pop()
+  special_chars = ['@','$','!','#','%','&','(',')','0','3','8','<','|']
+  punc = ['@','*','+','-',':','”','/','\\','~','?','[',']','{','}','$','!','#','%','&','(',')','_' ,'<','|']
+  alphabets = ['a','s','i','r','x','q','c','j','o','e','b','k','l']
+  c2s = {}
+  for i in range(13):
+    c2s[alphabets[i]]=special_chars[i]
+  def randomly_capitalize(s):
+    result = ''
+    for char in s:
+      flag = random.randint(0, 1)
+      if flag == 0:
+        result += char.upper()
+      else:
+        result += char.lower()
+    return result
+  def merge_randomly(str1,str2):
+    result = ''
+    flag = random.randint(0, 1)
+    if flag == 0:
+      result = str1 + str2
+    else:
+      result = str2 + str1
+    return result,flag
+  def charToSpecial(s):
+    for char in s:
+      if char in c2s:
+        s = s.replace(char,c2s[char])
+    return s
+  def insert_number(s,n,f,str1,str2):
+    flag = random.randint(0, 2)
+    if flag == 0:
+      return n+s
+    elif flag == 2:
+      return s+n
+    else:
+      if f==0:
+        return s[:len(str1)]+n+s[len(str1):]
+      else:
+        return s[:len(str2)]+n+s[len(str2):]
+  def add_punctuation(s):
+    return s+random.choice(punc)
+  temp = list(words)
+  string1 = random.choice(temp)
+  temp.remove(string1)
+  string2 = random.choice(temp)
+  number = random.choice(numbers)
+  string1,string2 = randomly_capitalize(string1),randomly_capitalize(string2)
+  final_string,f = merge_randomly(string1,string2)
+  final_string = charToSpecial(final_string)
+  final_string = insert_number(final_string,number,f,string1,string2)
+  final_string = add_punctuation(final_string)
+  C = len(final_string)
+  if C < 8:
+    for i in range(8 - C):
+      final_string += random.choice(special_chars)
+  js.alert("Password:"+final_string)
+cc=create_proxy(pwd_generate)
+run1Button.addEventListener("click",cc)
+            </py-script>
         </form>
       </div>
-      <div id="password"></div>
-      <script src="popd.js"></script>
+      <!-- <div id="password"></div> -->
+      <!-- <script src="popd.js"></script> -->
 
     </div>
   </main>
