@@ -160,9 +160,9 @@ patterns = ['shadow', 'a199', 'dima199', '91', '1991', 'pun', 'EY', '1234', '123
             'hello', 'night', 'ic']
 # Function to categorize password
 
-
+import mysql.connector
 def password(v):
-    import mysql.connector
+    
 
     # connect to the MySQL database
     connector= mysql.connector.connect(user='sanga123', 
