@@ -1,7 +1,7 @@
 ## password-generator-and-analyser
 
-Duration of the project: 4 months
-Project Mentors: Akash Prasad, Ranjana Kambhammettu
+Duration of the project: 4 months <br>
+Project Mentors: Akash Prasad, Ranjana Kambhammettu<br>
 Team Members: Aryamaan Chaurasia, Kiran Seetharam, A D Mahit Nandan, Kunal Singh Rajpurohit
 
 # Introduction
